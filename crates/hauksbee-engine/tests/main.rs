@@ -147,6 +147,8 @@ mod renode_riscv_arm_cosim;
 mod run_manifest_contract;
 #[path = "run_report_schema_drift.rs"]
 mod run_report_schema_drift;
+#[path = "run_spice_models.rs"]
+mod run_spice_models;
 #[path = "sample_boards.rs"]
 mod sample_boards;
 #[path = "schematic_bind.rs"]

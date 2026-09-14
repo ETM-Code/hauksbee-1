@@ -67,6 +67,8 @@ mod sensor_attach;
 mod shipped_examples_run;
 #[path = "spec_and_assertions.rs"]
 mod spec_and_assertions;
+#[path = "spice_models_cli.rs"]
+mod spice_models_cli;
 #[path = "tolerance.rs"]
 mod tolerance;
 #[path = "unpowered_rail_is_declared.rs"]
