@@ -84,3 +84,31 @@ fn netlist_to_board_preserves_components_and_nets() {
         "the netlist-derived .board diode must bind to a Device::Diode"
     );
 }
+
+#[test]
+fn a_schematic_hierarchy_decompiles_whole() {
+    // `to-code` read the top sheet's TEXT, so a hierarchy spread across sibling
+    // files lost everything below the root with nothing said: the parent sheet
+    // below emitted R1 alone, while `run --list-nets` on the same file reported
+    // the child's net too. A truncated board reads as a small board, which is
+    // the worst shape for a decompiler whose output people paste into bug
+    // reports.
+    let parent = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+        .join("../hauksbee-extract/tests/fixtures/subsheet_parent.kicad_sch");
+    let text = std::fs::read_to_string(&parent).expect("read the parent sheet");
+
+    let code = hauksbee_engine::decompile_any_path_to_code(&parent, &text).expect("to-code");
+    assert!(code.contains("comp R1"), "the parent sheet's part: {code}");
+    assert!(
+        code.contains("comp U1"),
+        "the child sheet's part is missing: {code}"
+    );
+    assert!(
+        code.contains("USB_PWR_EN"),
+        "the net the two sheets share is missing: {code}"
+    );
+
+    // What the text-only path sees, for contrast: the same file, no hierarchy.
+    let flat = decompile_any_to_code(&text).expect("to-code from text alone");
+    assert!(!flat.contains("comp U1"));
+}

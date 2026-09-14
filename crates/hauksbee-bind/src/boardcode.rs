@@ -51,6 +51,28 @@ pub fn decompile_any_to_code(board_text: &str) -> anyhow::Result<String> {
     Ok(program_from_extracted(&board)?.emit())
 }
 
+/// [`decompile_any_to_code`] for a board that came from a file on disk.
+///
+/// A `.kicad_sch` hierarchy is spread across sibling files, and the text of the
+/// top sheet alone carries neither the sub-sheets' parts nor their nets. Text
+/// is all `decompile_any_to_code` has, so a hierarchical schematic decompiled
+/// through it lost everything below the root sheet with nothing said: a
+/// nine-sheet board emitted four components and one net, which reads as a
+/// small board rather than as a truncated one. Every caller holding the board's
+/// path should use this, and it is what [`crate::board_input::from_path`]
+/// already does for the analysis surfaces.
+pub fn decompile_any_path_to_code(path: &Path, board_text: &str) -> anyhow::Result<String> {
+    let is_sch = path
+        .extension()
+        .and_then(|e| e.to_str())
+        .is_some_and(|e| e.eq_ignore_ascii_case("kicad_sch"));
+    if !is_sch {
+        return decompile_any_to_code(board_text);
+    }
+    let board = ExtractedBoard::from_kicad_schematic_path(path)?;
+    Ok(program_from_extracted(&board)?.emit())
+}
+
 /// Build an editable Board-as-Code [`Program`] directly from an
 /// [`ExtractedBoard`].
 ///

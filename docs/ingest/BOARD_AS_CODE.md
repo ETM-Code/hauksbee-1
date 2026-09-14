@@ -99,6 +99,10 @@ only, and that the routed copper of the input is not in the output. That is the
 point of the exercise: the *connectivity* has to survive a trip through a
 representation that never held the geometry.
 
+A `.kicad_sch` is read by path, so the sheet hierarchy is followed and every
+sub-sheet's parts and nets are in the output, the same way `hauksbee run` sees
+them.
+
 ```bash
 hauksbee to-code crates/hauksbee-ci/examples/boards/watchy.kicad_pcb --out w.board
 hauksbee from-code w.board --out w_rebuilt.kicad_pcb

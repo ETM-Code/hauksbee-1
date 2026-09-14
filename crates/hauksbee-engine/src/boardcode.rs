@@ -35,8 +35,8 @@ use crate::engine::HauksbeeEngine;
 use crate::stress::FaultEvent;
 
 pub use hauksbee_bind::boardcode::{
-    code_to_board_text, decompile_any_to_code, decompile_board_to_code, load_code,
-    program_from_extracted,
+    code_to_board_text, decompile_any_path_to_code, decompile_any_to_code, decompile_board_to_code,
+    load_code, program_from_extracted,
 };
 
 /// The outcome of a [`check_code`] run.

@@ -595,7 +595,7 @@ fn board_to_code(args: &Value) -> Result<Value, String> {
          text format (.kicad_pcb or Eagle .brd XML)"
             .to_string()
     })?;
-    let code = hauksbee_engine::decompile_any_to_code(&text)
+    let code = hauksbee_engine::decompile_any_path_to_code(std::path::Path::new(board_path), &text)
         .map_err(|e| format!("could not decompile the board: {e}"))?;
     Ok(json!({ "board": display_name(board_path), "code": code }))
 }

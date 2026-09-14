@@ -7,7 +7,7 @@
 use std::path::{Path, PathBuf};
 
 use crate::boardcode::{
-    check_code, decompile_any_to_code, load_code, render_check_report, CheckOptions,
+    check_code, decompile_any_path_to_code, load_code, render_check_report, CheckOptions,
 };
 use crate::commands::common::read_board_text;
 
@@ -19,7 +19,7 @@ use crate::commands::common::read_board_text;
 /// becomes editable Board-as-Code).
 pub fn to_code(board: &Path, out: Option<&Path>) -> anyhow::Result<()> {
     let text = read_board_text(board)?;
-    let code = decompile_any_to_code(&text)?;
+    let code = decompile_any_path_to_code(board, &text)?;
     // Board-as-Code carries components + nets, NOT routed copper: a 54 MB
     // layout decompiles to a few hundred KB with every track/via/zone gone.
     // That is by design (the DSL is a netlist-level editing surface), but it

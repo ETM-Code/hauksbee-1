@@ -66,9 +66,9 @@ pub use binder::{
 };
 pub use board_input::{BoardInputError, InputKind, NormalizedBoard};
 pub use boardcode::{
-    check_board_text, check_code, code_to_board_text, decompile_any_to_code,
-    decompile_board_to_code, load_code, program_from_extracted, render_check_report, CheckOptions,
-    CheckReport,
+    check_board_text, check_code, code_to_board_text, decompile_any_path_to_code,
+    decompile_any_to_code, decompile_board_to_code, load_code, program_from_extracted,
+    render_check_report, CheckOptions, CheckReport,
 };
 pub use checks::usb_c::{
     classify_attach, classify_board, extract_sink_termination, usb_c_report, Attach, Cable,

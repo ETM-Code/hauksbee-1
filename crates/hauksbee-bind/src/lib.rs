@@ -51,8 +51,8 @@ pub use binder::{
 };
 pub use board_input::{BoardInputError, InputKind, NormalizedBoard};
 pub use boardcode::{
-    code_to_board_text, decompile_any_to_code, decompile_board_to_code, load_code,
-    program_from_extracted,
+    code_to_board_text, decompile_any_path_to_code, decompile_any_to_code, decompile_board_to_code,
+    load_code, program_from_extracted,
 };
 pub use power_supply::{BatteryProtection, Chemistry, PowerSupply, SupplyLeg, UsbSpec};
 pub use shorts::{AppliedShort, BRIDGE_OHMS};
